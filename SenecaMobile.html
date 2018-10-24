@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+<script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+<script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+<script src="senecaJS.js"></script>
+<?php require:connect.php?>
+    
+
+    <meta charset="utf-8" />
+    <title></title>
+   
+</head>
+<body>
+    <ons-page>
+
+        <ons-toolbar>
+            <div class="center" style="font-size:x-large">SENECA</div>
+        </ons-toolbar>
+      
+        <ons-tabbar swipeable position="auto">
+            <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" active>
+            </ons-tab>
+            <ons-tab page="tab2.html" label="Settings" icon="md-settings" >
+            </ons-tab>
+        </ons-tabbar>
+    </ons-page>
+
+    <template id="tab1.html">
+        <ons-page id="Home">
+            <p style="text-align: center;">
+                This is where jobs would be listed
+            </p>
+            <ons-pull-hook id="pull-hook">
+                
+            </ons-pull-hook>
+            <ul class="list">
+                <li class="list-item list-item--tappable">
+                    <div class="list-item__center" id="job1">JOB 1</div>
+                </li>
+                <li class="list-item list-item--tappable">
+                    <div class="list-item__center">JOB 2</div>
+                </li>
+                <li class="list-item list-item--tappable">
+                    <div class="list-item__center">JOB 3 </div>
+                </li>
+            </ul>
+        </ons-page>
+    </template>
+    <template id="tab2.html">
+        <ons-page id="Settings">
+            <p style="text-align: center;">
+                This is where the employee can access thier personal information
+            </p>
+        </ons-page>
+    </template>
+   
+    
+     <script>
+   
+
+</script>
+   
+
+
+    
+</body>
+</html>
