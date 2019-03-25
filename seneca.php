@@ -35,7 +35,7 @@ if(isset($_SESSION['isActive']) && $_SESSION['isActive'] === true ) {
         <ons-page>
       
  <ons-toolbar>
-                 <div class="center" style="font-size:x-large">SENECA</div>
+                 <div class="center" style="font-size:x-large">SENECA TEST</div>
                          </ons-toolbar>
 
 <ons-tabbar swipeable position="auto">
