@@ -2,7 +2,8 @@
 
     
       <?php 
-      echo"Details ";
+      echo"<h3 style = 'color:#f4511e; text-align:center;' >Details </h3>";
+      echo"<br/>\n";
       
      
       ?>
@@ -18,13 +19,16 @@ if(isset($_GET['poo'])){
  //echo $myvar;
   }
   
- 
- 
+ $checkinVar = pg_query($db, "SELECT status FROM job where pk_job =  $myvar");
+ $checkVar = pg_fetch_row($checkinVar);
+ echo$checkVar[0];
+
 $result= pg_query($db, "SELECT * FROM jobview where pk_job= $myvar ");//CHANGE!!!!!!!!
 $location = pg_query($db,"SELECT address, city,state FROM jobview where pk_job =$myvar");//MATCH THE CHANGE!!!!!!
 
 
 while ($row = pg_fetch_row($result)){
+
   echo "Problem:  $row[1]" ;
   echo "<br />\n";
   echo " Address: $row[2]";
@@ -36,23 +40,21 @@ while ($row = pg_fetch_row($result)){
   echo "ZipCode: $row[5]";
   echo"<br/>\n";
   echo "Customer: $row[6]";
-  echo"<br/>\n"; 
-  echo "Payment Method: $row[8]";
-  echo"<br/>\n";
+  echo"<br/>\n";   
   echo"Priority: $row[9]";
-  echo"<br/>\n";
-  echo "Start Time: $row[13]";
-  echo"<br/>\n";
+  echo"<br/>\n";  
   echo "Due By: $row[14]";
   echo"<br/>\n";
   echo "Description: $row[16]";
    echo"<br/>\n";
+   
      }
-
-  
- echo "<ons-button onclick='checkout(event)' modifier='small' id='$myvar' >Checkout </ons-button>";
- echo"<br>";
- echo "<ons-button onclick='checkin(event)' modifier='small' id='$myvar' >Check In </ons-button>";
+     //if not in progress setDisabled to true, else false 
+  echo "<ons-button style = 'background-color:#f4511e' onclick='checkin(event)' modifier='large' id='$myvar' >Check In </ons-button>";
+  echo"<br>";
+  if($checkVar[0]=='In Progress'){echo "<ons-button style = 'background-color:#f4511e' onclick='checkout(event)' modifier='large' id='$myvar' >Checkout </ons-button>";}
+ 
+  //echo "<ons-button style = 'background-color:#f4511e' onclick='checkout(event)' modifier='large' id='$myvar' >Checkout </ons-button>";
       //echo "<input class='form-control btn-black' type='submit' value='CHECK IN' id='$myvar' onclick='checkin(event)'>";   
       //echo "<input class='form-control btn-black' type='submit' value='CHECK OUT' id='$myvar' onclick='checkout(event)'>"; 
       
@@ -61,10 +63,10 @@ while ($row = pg_fetch_row($result)){
    
      $loc=pg_fetch_row($location);
     
-   echo "<a href = 'https://www.google.com/maps/search/$loc[0]$loc[1]$loc[2] '>JOB LOCATION</a>";
+   echo "<a href = 'https://www.google.com/maps/search/$loc[0]$loc[1]$loc[2] 'style = 'color:#f4511e; text-align:center;'>JOB LOCATION</a>";
 
 
-   echo"<a href='seneca.php'>JOBS LIST</a>"
+   echo"<a href='seneca.php' style = 'color:#f4511e; text-align:center;'>JOBS LIST</a>"
 
    ?>
    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
