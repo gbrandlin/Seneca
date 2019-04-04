@@ -22,9 +22,8 @@ if(isset($_SESSION['isActive']) && $_SESSION['isActive'] === true ) {
 
    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
-    
-      
           
+         
 
         <meta charset="utf-8" />
        
@@ -35,13 +34,13 @@ if(isset($_SESSION['isActive']) && $_SESSION['isActive'] === true ) {
         <ons-page>
       
  <ons-toolbar>
-                 <div class="center" style="font-size:x-large">SENECA TEST</div>
+                 <div class="center" style="font-size:x-large; color:#f4511e;">SENECA</div>
                          </ons-toolbar>
 
 <ons-tabbar swipeable position="auto">
-    <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" active>
+    <ons-tab  page="tab1.html" label="Home" icon="ion-home, material:md-home" active>
     </ons-tab>
-    <ons-tab page="tab2.html" label="Settings" icon="md-settings" >
+    <ons-tab page="tab2.html" label="Profile" icon="md-face" >
     </ons-tab>
     
 </ons-tabbar>
@@ -61,27 +60,50 @@ if(isset($_SESSION['isActive']) && $_SESSION['isActive'] === true ) {
     
 <?php
    
- 
-
 $datares= pg_query($db, "SELECT * FROM jobqueueview where fk_employee =  $_SESSION[fk_emp]");
 
-//if fk_emp is not in job queueview, then show no jobs listed ELSE 
-//if($datares = '!null'){
 
- //echo"nothing here";}
-//else{
+
+//$checkIn = pg_query($db)
+
 //the problem is that the pk_id of the user is not the same as the forgein key so I need to do a query when logging in to save that as well. 
+//^old problem
+
+// new problem\/
+//var_dump ($datares); 
+
+
 
 $row = pg_fetch_all($datares);
+//var_dump( $row);
+if(is_array($row)){
+
+// $checkinVar = pg_query($db, "SELECT status FROM job where pk_job =  $id");
+//$chVR= pg_fetch_all($checkinVar);
+ 
+// foreach($chVR as $array){
+//$myass = $array['status'];
+//$newvar = json_decode($myass);
+//if($newvar ='[{"status":"In Progress"}]') {echo "style='background-color:#4511e'";} 
+//echo $newvar;
+//}
 echo"<div id=res></div>";
 
 foreach ($row as $array) {
 $data = $array['pk_job'];
 $id= json_decode($data);
  
+
+
+ //echo$checkVar[0];
+ //if($checkVar[0] ='In Progress') {echo "<ons-card style = 'background-color:#f4511e'>";} 
 echo"<ons-card>";
-  echo " <div id= '$id' onclick='customPush2(event)'> "; 
-                  
+ $checkinVar = pg_query($db, "SELECT status FROM job where pk_job =  $id");
+ $checkVar = pg_fetch_row($checkinVar);
+ if($checkVar[0]=='In Progress'){ echo$checkVar[0];}
+echo  "<ons-ripple color='#f4511e' ></ons-ripple>";
+  echo " <div id= '$id' onclick='customPush2(event)'  > "; 
+                
   echo  $array['etastart'] ;
   echo "<br />\n";
   echo  $array['dueby'];
@@ -94,8 +116,12 @@ echo"<ons-card>";
   //need to work on making it dynamic...
   //this while loop works, does show all info execpt for name in first row, only need select info so the query needs to change, this query will work on the job detail page. 
     }
-  //}
+    
+  }else{
+echo "NO JOBS LISTED";}
   //right now getting whole row from jobqueue 1/ only want select variables such as customer name and prolem and time 
+ 
+
  ?>
   </ul>
 
@@ -105,8 +131,15 @@ echo"<ons-card>";
     <ons-page id="Settings">
         <p style="text-align: center;">
         This is where the employee can access thier personal information
-              
-        <ons-button onclick="  window.location.href = 'senecalogout.php'; " modifier='small'  >LOGOUT </ons-button>
+        <?php
+              $empdata= pg_query($db, "SELECT * FROM employee where pk_employee =  $_SESSION[fk_emp]");
+              while($row=pg_fetch_row($empdata)){
+              echo"Name: $row[2] $row[3]";
+
+
+              }
+              ?>
+        <ons-button onclick="  window.location.href = 'senecalogout.php'; " modifier='small' style = 'background-color:#f4511e'  >LOGOUT </ons-button>
         <!-- <a href = senecalogout.php >LOGOUT</a>;-->
 
         </p>
@@ -114,91 +147,7 @@ echo"<ons-card>";
 </template>
 
 
-<template id="tab3.html">
-    <ons-page id="connection">
-        <p>
-        if we have a connection, this page will let us know...
-           
 
-		<?php
-   
- 
-$result = pg_query($db, "SELECT * FROM jobboardview");
-
-while ($row = pg_fetch_row($result)) {
-  echo "Job: $row[0]  etastart: $row[1]   Due by: $row[2]" ;
-  echo "<br />\n";
-}
-
-?>
-        </p>
-    </ons-page>
-
-
-    </template>
-
-  
-  <template id="page2.html">
-  <ons-page id="page2">
-    <ons-toolbar>
-     
-      <?php 
-      echo"Details ";
-     
-      ?>
-</div>
-    </ons-toolbar>
-    <p>
-    
-    
-    <?php 
-
-    // somehow get the job number when clicked and save it in the session. 
-// i see how it is!! you mother fuckers!!! when we login, pretty sure we need to establish the jobs they have and save that somehow to put it over here...
-if(isset($_GET['poo'])){
- $myvar = $_GET['poo'];
- echo $myvar;
-  }
-  
-  echo "<script>document.writeln(poo);</script>";
- 
-$result= pg_query($db, "SELECT * FROM jobview where pk_job= $myvar ");//CHANGE!!!!!!!!
-$location = pg_query($db,"SELECT address, city,state FROM jobview where pk_job =$myvar");//MATCH THE CHANGE!!!!!!
-//$job = pg_query($db_connection,"SELECT address, city,state FROM jobview where pk_job=2 ");
-
-while ($row = pg_fetch_row($result)){
-  echo "Problem:  $row[1]" ;
-  echo "<br />\n";
-  echo " Address: $row[2]";
-  echo "<br />\n";
-  echo "City: $row[3]";
-  echo"<br/>\n";
-  echo "State: $row[4]";
-  echo"<br/>\n";
-  echo "ZipCode: $row[5]";
-  echo"<br/>\n";
-  echo "Customer: $row[6]";
-  echo"<br/>\n"; 
-  echo "Payment Method: $row[8]";
-  echo"<br/>\n";
-  echo"Priority: $row[9]";
-  echo"<br/>\n";
-  echo "Start Time: $row[13]";
-  echo"<br/>\n";
-  echo "Due By: $row[14]";
-  echo"<br/>\n";
-  echo "Description: $row[16]";
-     }
-
-     echo"<button>CHECK IN</button>";
-     $loc=pg_fetch_row($location);
-    var_dump( $loc[0]);
-   echo "<a href = 'https://www.google.com/maps/search/$loc[0] $loc[1] $loc[2] '>JOB LOCATION</a>";
-    ?>
-    </p>
-    
-    </ons-page>
-    </template>
 
 
 <script>
@@ -277,7 +226,7 @@ var customPush2 = function (event) {
         <ons-page>
       
  <ons-toolbar>
-                 <div class="center" style="font-size:x-large">SENECA</div>
+                 <div class="center" style="font-size:x-large; color:#f4511e;">SENECA</div>
                          </ons-toolbar>
 
 <div class='row'>
