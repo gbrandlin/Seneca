@@ -1,3 +1,4 @@
+<meta http-equiv="refresh" content="3" />
 <?php
 require('sennecaconnect.php');
 if(isset($_GET['poo'])){
@@ -8,5 +9,9 @@ if(isset($_GET['poo'])){
 
  $res= pg_query($db," SELECT checkin($myvar)");
 
+  ?>
 
- ?>
+ <script>
+ ons.notification.alert( 'Checking into job..')
+  
+ </script>

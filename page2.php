@@ -50,10 +50,10 @@ while ($row = pg_fetch_row($result)){
    
      }
      //if not in progress setDisabled to true, else false 
-  echo "<ons-button style = 'background-color:#f4511e' onclick='checkin(event)' modifier='large' id='$myvar' >Check In </ons-button>";
+  echo "<ons-button style = 'background-color:#f4511e' onclick='checkin(event)'    modifier='large' id='$myvar' >Check In </ons-button>";
   echo"<br>";
   if($checkVar[0]=='In Progress'){echo "<ons-button style = 'background-color:#f4511e' onclick='checkout(event)' modifier='large' id='$myvar' >Checkout </ons-button>";}
- 
+
   //echo "<ons-button style = 'background-color:#f4511e' onclick='checkout(event)' modifier='large' id='$myvar' >Checkout </ons-button>";
       //echo "<input class='form-control btn-black' type='submit' value='CHECK IN' id='$myvar' onclick='checkin(event)'>";   
       //echo "<input class='form-control btn-black' type='submit' value='CHECK OUT' id='$myvar' onclick='checkout(event)'>"; 
@@ -75,7 +75,7 @@ while ($row = pg_fetch_row($result)){
 var checkin = function (event) {
    var poo = event.target.id
   
- 
+     
     $.ajax({url:"checkin.php",data: {"poo":poo}}).done(function(data){ $("#newdiv").html(data);});
              
       
