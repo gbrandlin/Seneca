@@ -21,7 +21,7 @@ if(isset($_GET['poo'])){
   
  $checkinVar = pg_query($db, "SELECT status FROM job where pk_job =  $myvar");
  $checkVar = pg_fetch_row($checkinVar);
- echo$checkVar[0];
+ //echo$checkVar[0];
 
 $result= pg_query($db, "SELECT * FROM jobview where pk_job= $myvar ");//CHANGE!!!!!!!!
 $location = pg_query($db,"SELECT address, city,state FROM jobview where pk_job =$myvar");//MATCH THE CHANGE!!!!!!
@@ -33,14 +33,11 @@ while ($row = pg_fetch_row($result)){
   echo "<br />\n";
   echo " Address: $row[2]";
   echo "<br />\n";
-  echo "City: $row[3]";
-  echo"<br/>\n";
-  echo "State: $row[4]";
-  echo"<br/>\n";
-  echo "ZipCode: $row[5]";
-  echo"<br/>\n";
+ 
+ 
   echo "Customer: $row[6]";
-  echo"<br/>\n";   
+  echo"<br/>\n";  
+ echo"<br/>\n"; 
   echo"Priority: $row[9]";
   echo"<br/>\n";  
   echo "Due By: $row[14]";
@@ -63,10 +60,11 @@ while ($row = pg_fetch_row($result)){
    
      $loc=pg_fetch_row($location);
     
-   echo "<a href = 'https://www.google.com/maps/search/$loc[0]$loc[1]$loc[2] 'style = 'color:#f4511e; text-align:center;'>JOB LOCATION</a>";
+   echo "<a href = 'https://www.google.com/maps/search/$loc[0]$loc[1]$loc[2] 'style = ' text-align:center;'>JOB LOCATION</a>";
+   echo "<br>";
 
 
-   echo"<a href='seneca.php' style = 'color:#f4511e; text-align:center;'>JOBS LIST</a>"
+   echo"<a href='seneca.php' style = ' text-align:center;'>JOB LIST</a>"
 
    ?>
    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -94,5 +92,14 @@ var checkin = function (event) {
    </script>
     
    
-    
+    <style>
+    a:link, a:visited{
+     color:white;
+  background-color:#f4511e;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+      }
+    </style>
     

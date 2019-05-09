@@ -130,12 +130,12 @@ echo "NO JOBS LISTED";}
 <template id="tab2.html">
     <ons-page id="Settings">
         <p style="text-align: center;">
-        This is where the employee can access thier personal information
+        
         <?php
               $empdata= pg_query($db, "SELECT * FROM employee where pk_employee =  $_SESSION[fk_emp]");
               while($row=pg_fetch_row($empdata)){
               echo"Name: $row[2] $row[3]";
-
+       
 
               }
               ?>
